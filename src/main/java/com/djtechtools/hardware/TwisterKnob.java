@@ -29,13 +29,11 @@ public class TwisterKnob {
         });
 
         mKnob.setAdjustValueMatcher(bankMatcher);
-        mKnob.disableTakeOver();
         mKnob.targetValue().addValueObserver((val) -> {
             session.sendMidi(0xB0, i, (int)Math.round(val * 127));
         });
 
         mSKnob.setAdjustValueMatcher(sBankMatcher);
-        mSKnob.disableTakeOver();
         mSKnob.targetValue().addValueObserver((val) -> {
             session.sendMidi(0xB4, i, (int)Math.round(val * 127));
         });
