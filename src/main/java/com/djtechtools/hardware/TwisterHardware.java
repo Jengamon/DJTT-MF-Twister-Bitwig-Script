@@ -14,7 +14,7 @@ public class TwisterHardware {
     private UserControlBank mControls;
     private ArrayList<HardwareBinding> mBindings;
 
-    public TwisterHardware(ControllerHost host, Session session, BooleanValue ese) {
+    public TwisterHardware(ControllerHost host, Session session) {
         mSurface = host.createHardwareSurface();
 //        mBank = new AtomicInteger(0);
 
@@ -33,24 +33,11 @@ public class TwisterHardware {
         for(int i = 0; i < mKnobs.length; i++) {
             mControls.getControl(i).addBinding(mKnobs[i].getKnob());
             mControls.getControl(i + 64).addBinding(mKnobs[i].getShiftKnob());
+
+            mControls.getControl(i).setIndication(true);
+            mControls.getControl(i + 64).setIndication(true);
         }
-//        bindBank(0);
     }
-//
-//    private void bindBank(int bank) {
-//        for(HardwareBinding binding : mBindings) {
-//            binding.removeBinding();
-//        }
-//        mBindings.clear();
-//        mBank.set(bank);
-//        for(int i = 0; i < mKnobs.length; i++) {
-//            mBindings.add(mControls.getControl(i + bank * 16).addBinding(mKnobs[i].getKnob()));
-//            mBindings.add(mControls.getControl(64 + i + bank * 16).addBinding(mKnobs[i].getShiftKnob()));
-////            Parameter buttonParam = mControls.getControl(128 + bank * 16);
-////            mBindings.add(mKnobs[i].getButton().pressedAction().addBinding(buttonParam));
-////            mBindings.add(mKnobs[i].getButton().releasedAction().addBinding(buttonParam));
-//        }
-//    }
 
     public void updateHardware() {
         mSurface.updateHardware();
@@ -58,10 +45,10 @@ public class TwisterHardware {
 
     public void handleMidi(ShortMidiMessage msg) {
         if(msg.isControlChange() && msg.getChannel() == 3) {
-            int bank = msg.getData1();
-            if (msg.getData2() == 0xFF) {
-//                bindBank(bank);
-            }
+//            int bank = msg.getData1();
+//            if (msg.getData2() == 0xFF) {
+////                bindBank(bank);
+//            }
         }
     }
 }

@@ -31,10 +31,10 @@ public class MidiFighterTwisterExtension extends ControllerExtension
       System.setErr(new PrintStream(new CallableOutputStream(host::errorln)));
 
       Preferences prefs = host.getPreferences();
-      BooleanValue enableShiftEncoders = prefs.getBooleanSetting("Enable Shift Encoders?", "General", false);
+//      BooleanValue enableShiftEncoders = prefs.getBooleanSetting("Enable Shift Encoders?", "General", false);
 
       mSession = new Session(host);
-      mHardware = new TwisterHardware(host, mSession, enableShiftEncoders);
+      mHardware = new TwisterHardware(host, mSession);
 
       mTransport = host.createTransport();
       mSession.getMidiIn().setMidiCallback((ShortMidiMessageReceivedCallback) this::onMidi0);
