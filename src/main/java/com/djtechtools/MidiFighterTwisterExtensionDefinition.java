@@ -73,21 +73,24 @@ public class MidiFighterTwisterExtensionDefinition extends ControllerExtensionDe
    {
       if (platformType == PlatformType.WINDOWS)
       {
-         // TODO: Set the correct names of the ports for auto detection on Windows platform here
-         // and uncomment this when port names are correct.
-         // list.add(new String[]{"Input Port 0"}, new String[]{"Output Port 0"});
+         list.add(new String[]{"Midi Fighter Twister"}, new String[]{"Midi Fighter Twister"});
+         list.add(new String[]{"Midi Fighter Twister #2"}, new String[]{"Midi Fighter Twister #2"});
+         list.add(new String[]{"Midi Fighter Twister #3"}, new String[]{"Midi Fighter Twister #3"});
+         list.add(new String[]{"Midi Fighter Twister #4"}, new String[]{"Midi Fighter Twister #4"});
       }
       else if (platformType == PlatformType.MAC)
       {
-         // TODO: Set the correct names of the ports for auto detection on Windows platform here
-         // and uncomment this when port names are correct.
-         // list.add(new String[]{"Input Port 0"}, new String[]{"Output Port 0"});
+         list.add(new String[]{"Midi Fighter Twister"}, new String[]{"Midi Fighter Twister"});
+         list.add(new String[]{"Midi Fighter Twister #2"}, new String[]{"Midi Fighter Twister #2"});
+         list.add(new String[]{"Midi Fighter Twister #3"}, new String[]{"Midi Fighter Twister #3"});
+         list.add(new String[]{"Midi Fighter Twister #4"}, new String[]{"Midi Fighter Twister #4"});
       }
       else if (platformType == PlatformType.LINUX)
       {
-         // TODO: Set the correct names of the ports for auto detection on Windows platform here
-         // and uncomment this when port names are correct.
-         // list.add(new String[]{"Input Port 0"}, new String[]{"Output Port 0"});
+         list.add(new String[]{"Midi Fighter Twister"}, new String[]{"Midi Fighter Twister"});
+         list.add(new String[]{"Midi Fighter Twister #2"}, new String[]{"Midi Fighter Twister #2"});
+         list.add(new String[]{"Midi Fighter Twister #3"}, new String[]{"Midi Fighter Twister #3"});
+         list.add(new String[]{"Midi Fighter Twister #4"}, new String[]{"Midi Fighter Twister #4"});
       }
    }
 
