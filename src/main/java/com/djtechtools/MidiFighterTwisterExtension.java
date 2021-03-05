@@ -2,11 +2,10 @@ package com.djtechtools;
 
 import com.bitwig.extension.api.util.midi.ShortMidiMessage;
 import com.bitwig.extension.callback.ShortMidiMessageReceivedCallback;
-import com.bitwig.extension.controller.api.BooleanValue;
-import com.bitwig.extension.controller.api.ControllerHost;
-import com.bitwig.extension.controller.api.Preferences;
-import com.bitwig.extension.controller.api.Transport;
+import com.bitwig.extension.controller.api.*;
 import com.bitwig.extension.controller.ControllerExtension;
+import com.djtechtools.hardware.FocusDeviceEnumValue;
+import com.djtechtools.hardware.FocusGlobalEnumValue;
 import com.djtechtools.hardware.TwisterHardware;
 import com.djtechtools.internal.CallableOutputStream;
 import com.djtechtools.internal.Session;
@@ -31,10 +30,12 @@ public class MidiFighterTwisterExtension extends ControllerExtension
       System.setErr(new PrintStream(new CallableOutputStream(host::errorln)));
 
       Preferences prefs = host.getPreferences();
+      DocumentState state = host.getDocumentState();
+      SettableEnumValue focusDevice = state.getEnumSetting("Focus Device", "General", new FocusGlobalEnumValue());
 //      BooleanValue enableShiftEncoders = prefs.getBooleanSetting("Enable Shift Encoders?", "General", false);
 
       mSession = new Session(host);
-      mHardware = new TwisterHardware(host, mSession);
+      mHardware = new TwisterHardware(host, mSession, focusDevice);
 
       mTransport = host.createTransport();
       mSession.getMidiIn().setMidiCallback((ShortMidiMessageReceivedCallback) this::onMidi0);

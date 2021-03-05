@@ -13,8 +13,9 @@ public class TwisterHardware {
 //    private AtomicInteger mBank;
     private UserControlBank mControls;
     private ArrayList<HardwareBinding> mBindings;
+    private CursorRemoteControlsPage mRemote;
 
-    public TwisterHardware(ControllerHost host, Session session) {
+    public TwisterHardware(ControllerHost host, Session session, EnumValue focusDevice) {
         mSurface = host.createHardwareSurface();
 //        mBank = new AtomicInteger(0);
 
@@ -27,16 +28,34 @@ public class TwisterHardware {
         session.sendMidi(0xB3, 0, 127);
 
         mBindings = new ArrayList<>();
-
         mControls = host.createUserControls(128);
+        CursorDevice device = host.createCursorTrack(0, 0).createCursorDevice("Primary", "Primary Device", 0, CursorDeviceFollowMode.FOLLOW_SELECTION);
+        mRemote = device.createCursorRemoteControlsPage(128);
 
         for(int i = 0; i < mKnobs.length; i++) {
-            mControls.getControl(i).addBinding(mKnobs[i].getKnob());
-            mControls.getControl(i + 64).addBinding(mKnobs[i].getShiftKnob());
-
+            // TODO Use bank number to determine who's indications get turned on.
             mControls.getControl(i).setIndication(true);
             mControls.getControl(i + 64).setIndication(true);
+            mRemote.getParameter(i).setIndication(true);
+            mRemote.getParameter(i + 64).setIndication(true);
         }
+
+        mRemote.setHardwareLayout(HardwareControlType.ENCODER, 8);
+
+        focusDevice.addValueObserver((fd) -> {
+            for(int i = 0; i < mKnobs.length; i++) {
+                mKnobs[i].getKnob().clearBindings();
+                mKnobs[i].getShiftKnob().clearBindings();
+                System.out.println(fd);
+                if(fd.equals("Device")) {
+                    mKnobs[i].getKnob().addBinding(mRemote.getParameter(i));
+                    mKnobs[i].getShiftKnob().addBinding(mRemote.getParameter(i + 64));
+                } else {
+                    mKnobs[i].getKnob().addBinding(mControls.getControl(i));
+                    mKnobs[i].getShiftKnob().addBinding(mControls.getControl(i + 64));
+                }
+            }
+        });
     }
 
     public void updateHardware() {
