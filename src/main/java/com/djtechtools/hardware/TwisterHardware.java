@@ -14,8 +14,10 @@ public class TwisterHardware {
     private UserControlBank mControls;
     private ArrayList<HardwareBinding> mBindings;
     private CursorRemoteControlsPage mRemote;
+    private ControllerHost mHost;
 
     public TwisterHardware(ControllerHost host, Session session, EnumValue focusDevice) {
+        mHost = host;
         mSurface = host.createHardwareSurface();
 //        mBank = new AtomicInteger(0);
 
@@ -46,7 +48,6 @@ public class TwisterHardware {
             for(int i = 0; i < mKnobs.length; i++) {
                 mKnobs[i].getKnob().clearBindings();
                 mKnobs[i].getShiftKnob().clearBindings();
-                System.out.println(fd);
                 if(fd.equals("Device")) {
                     mKnobs[i].getKnob().addBinding(mRemote.getParameter(i));
                     mKnobs[i].getShiftKnob().addBinding(mRemote.getParameter(i + 64));
@@ -64,10 +65,11 @@ public class TwisterHardware {
 
     public void handleMidi(ShortMidiMessage msg) {
         if(msg.isControlChange() && msg.getChannel() == 3) {
-//            int bank = msg.getData1();
-//            if (msg.getData2() == 0xFF) {
-////                bindBank(bank);
-//            }
+            int bank = msg.getData1();
+            System.out.println("" + msg);
+            if(msg.getData2() == 127) {
+                mHost.showPopupNotification("Switched to Bank " + (bank + 1));
+            }
         }
     }
 }
