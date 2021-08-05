@@ -12,7 +12,7 @@ public class TwisterHardware {
     private HardwareSurface mSurface;
 //    private AtomicInteger mBank;
     private UserControlBank mControls;
-    private ArrayList<HardwareBinding> mBindings;
+//    private ArrayList<HardwareBinding> mBindings;
     private CursorRemoteControlsPage mRemote;
     private ControllerHost mHost;
 
@@ -29,7 +29,7 @@ public class TwisterHardware {
         // Force device to bank 1
         session.sendMidi(0xB3, 0, 127);
 
-        mBindings = new ArrayList<>();
+        //mBindings = new ArrayList<>();
         mControls = host.createUserControls(128);
         CursorDevice device = host.createCursorTrack(0, 0).createCursorDevice("Primary", "Primary Device", 0, CursorDeviceFollowMode.FOLLOW_SELECTION);
         mRemote = device.createCursorRemoteControlsPage(128);
@@ -46,14 +46,14 @@ public class TwisterHardware {
 
         focusDevice.addValueObserver((fd) -> {
             for(int i = 0; i < mKnobs.length; i++) {
-                mKnobs[i].getKnob().clearBindings();
-                mKnobs[i].getShiftKnob().clearBindings();
+                mKnobs[i].getEncoder().clearBindings();
+                mKnobs[i].getShiftEncoder().clearBindings();
                 if(fd.equals("Device")) {
-                    mKnobs[i].getKnob().addBinding(mRemote.getParameter(i));
-                    mKnobs[i].getShiftKnob().addBinding(mRemote.getParameter(i + 64));
+                    mKnobs[i].getEncoder().addBinding(mRemote.getParameter(i));
+                    mKnobs[i].getShiftEncoder().addBinding(mRemote.getParameter(i + 64));
                 } else {
-                    mKnobs[i].getKnob().addBinding(mControls.getControl(i));
-                    mKnobs[i].getShiftKnob().addBinding(mControls.getControl(i + 64));
+                    mKnobs[i].getEncoder().addBinding(mControls.getControl(i));
+                    mKnobs[i].getShiftEncoder().addBinding(mControls.getControl(i + 64));
                 }
             }
         });
