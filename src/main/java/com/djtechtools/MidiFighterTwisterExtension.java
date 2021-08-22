@@ -37,7 +37,6 @@ public class MidiFighterTwisterExtension extends ControllerExtension
       mSession = new Session(host);
       mHardware = new TwisterHardware(host, mSession, focusDevice);
 
-      mTransport = host.createTransport();
       mSession.getMidiIn().setMidiCallback((ShortMidiMessageReceivedCallback) this::onMidi0);
       mSession.getMidiIn().setSysexCallback(this::onSysex0);
 
@@ -74,18 +73,6 @@ public class MidiFighterTwisterExtension extends ControllerExtension
    /** Called when we receive sysex MIDI message on port 0. */
    private void onSysex0(final String data) 
    {
-      // MMC Transport Controls:
-      if (data.equals("f07f7f0605f7"))
-            mTransport.rewind();
-      else if (data.equals("f07f7f0604f7"))
-            mTransport.fastForward();
-      else if (data.equals("f07f7f0601f7"))
-            mTransport.stop();
-      else if (data.equals("f07f7f0602f7"))
-            mTransport.play();
-      else if (data.equals("f07f7f0606f7"))
-            mTransport.record();
+      // Do Nothing
    }
-
-   private Transport mTransport;
 }

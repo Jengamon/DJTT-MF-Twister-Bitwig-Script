@@ -11,14 +11,15 @@ public class FocusEnumDefinition implements EnumDefinition {
 
     @Override
     public int getValueCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public EnumValueDefinition valueDefinitionAt(int valueIndex) {
         return (new EnumValueDefinition[] {
                 new FocusDeviceEnumValue(),
-                new FocusGlobalEnumValue()
+                new FocusGlobalEnumValue(),
+                new MIDIEnumValue(),
         })[valueIndex];
     }
 
@@ -28,6 +29,8 @@ public class FocusEnumDefinition implements EnumDefinition {
             return new FocusDeviceEnumValue();
         } else if (id.equals("Global")) {
             return new FocusGlobalEnumValue();
+        } else if (id.equals("MIDI")) {
+            return new MIDIEnumValue();
         } else {
             return null;
         }

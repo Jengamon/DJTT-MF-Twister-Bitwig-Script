@@ -1,9 +1,8 @@
 package com.djtechtools.hardware;
 
+import com.bitwig.extension.api.Color;
 import com.bitwig.extension.controller.api.*;
 import com.djtechtools.internal.Session;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TwisterKnob {
     private HardwareButton mButton;
